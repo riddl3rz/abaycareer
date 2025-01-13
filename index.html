@@ -54,8 +54,13 @@
     const audio = document.getElementById('meme-audio');
 
     button.addEventListener('click', () => {
-  audio.currentTime = 0;
-  audio.play();
+ // Ensure the audio is always loaded and reset
+  audio.pause(); // Pause in case it's currently playing
+  audio.currentTime = 0; // Reset to the beginning
+  audio.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
+ // Trigger confetti regardless of audio playback success
   confetti({
     particleCount: 100,
     spread: 70,
