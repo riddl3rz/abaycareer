@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,10 +28,18 @@
       cursor: pointer;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s ease;
+ width: 80%; /* Mobile-friendly width */
+      max-width: 300px; /* Ensures the button doesn't get too large */
     }
     button:hover {
-      background-color: #21a1f1;
-    }
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
     button:active {
       transform: scale(0.95);
     }
@@ -45,9 +54,24 @@
     const audio = document.getElementById('meme-audio');
 
     button.addEventListener('click', () => {
-      audio.currentTime = 0; // Reset sound to the start
-      audio.play();
-    });
+  audio.currentTime = 0;
+  audio.play();
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+});
+
   </script>
+<p id="counter">Button clicked 0 times</p>
+<script>
+  let count = 0;
+  button.addEventListener('click', () => {
+    count++;
+    document.getElementById('counter').innerText = `Button clicked ${count} times`;
+  });
+</script>
+
 </body>
 </html>
